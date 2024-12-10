@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class movement : MonoBehaviour
+{
+    public float moveSpeed = 5f; 
+    public Transform cameraTransform;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    
+    void Update()
+    { 
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
+
+         if (movement.magnitude > 0.1f) 
+        {
+            
+            transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
+
+            
+            Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.deltaTime * 10f);
+        }
+
+        
+        if (cameraTransform != null)
+        {
+            cameraTransform.position = new Vector3(transform.position.x, cameraTransform.position.y, transform.position.z - 5f);
+        }
+       
+    }
+}
