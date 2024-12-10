@@ -1,0 +1,90 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro; 
+using UnityEngine.UI; 
+public class TreasureChest : MonoBehaviour
+{
+    public GameObject questionPanel;
+    private string answer = "";
+    public TMP_Text scoreText;
+    public Button trueButton;
+    public Button falseButton;
+    public TMP_Text questionText;
+
+    void OnTriggerEnter(Collider col)
+    {
+        Debug.Log("Enter");
+        questionPanel.SetActive(true);
+
+        if (col.gameObject.name == "Chest_1")
+        {
+            questionText.text = "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. Am I an echo?";
+            answer = "TRUE";
+        }
+        else if (col.gameObject.name == "Chest_2")
+        {
+            questionText.text = "The more of me you take, the more you leave behind. Am I footsteps?";
+            answer = "TRUE";
+        }
+        else if (col.gameObject.name == "Chest_3")
+        {
+            questionText.text = "I’m tall when I’m young, and I’m short when I’m old. Am I a tree?";
+            answer = "FALSE";
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        Debug.Log("Exit");
+        questionPanel.SetActive(false);
+    }
+
+    public void ButtonTrueClicked()
+    {
+        int score = int.Parse(scoreText.text);
+
+        if (answer == "TRUE")
+        {
+            score += 1;
+        }
+        else
+        {
+            score -= 1;
+        }
+
+        scoreText.text = score.ToString();
+    }
+
+    public void ButtonFalseClicked()
+    {
+        int score = int.Parse(scoreText.text);
+
+        if (answer == "FALSE")
+        {
+            score += 1;
+        }
+        else
+        {
+            score -= 1;
+        }
+
+        scoreText.text = score.ToString();
+    }
+
+    void Start()
+    {
+        
+        questionPanel.SetActive(false);
+
+        
+        trueButton.onClick.AddListener(ButtonTrueClicked);
+        falseButton.onClick.AddListener(ButtonFalseClicked);
+    }
+
+    
+    void Update()
+    {
+       
+    }
+}
